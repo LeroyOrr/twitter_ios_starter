@@ -9,7 +9,7 @@
 import UIKit
 
 class HomeTableViewController: UITableViewController {
-
+    
     
     var tweetArray = [NSDictionary]()
     var numberOfTweet: Int!
@@ -19,33 +19,33 @@ class HomeTableViewController: UITableViewController {
         super.viewDidLoad()
         loadTweet()
         print("Done")
-       
-}
-
-
-func loadTweet(){
-    
-    let myUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
-    let myParams = ["count": 10]
-    
-    TwitterAPICaller.client?.getDictionariesRequest(url: myUrl, parameters: myParams, success: { (tweets: [NSDictionary]) in
         
-        self.tweetArray.removeAll()
-        for tweet in tweets {
-            self.tweetArray.append(tweet)
-            
     }
+    
+    
+    func loadTweet(){
         
-        self.tableView.reloadData()
+        let myUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
+        let myParams = ["count": 10]
         
-        
-    }, failure: { (Error) in
-        print("Could not retreive tweets! oh no!!")
+        TwitterAPICaller.client?.getDictionariesRequest(url: myUrl, parameters: myParams, success: { (tweets: [NSDictionary]) in
+            
+            self.tweetArray.removeAll()
+            for tweet in tweets {
+                self.tweetArray.append(tweet)
+                
+            }
+            
+            self.tableView.reloadData()
+            
+            
+        }, failure: { (Error) in
+            print("Could not retreive tweets! oh no!!")
         })
         
     }
-
-
+    
+    
     @IBAction func onLogout(_ sender: Any) {
         TwitterAPICaller.client?.logout()
         self.dismiss(animated: true, completion: nil)
@@ -72,16 +72,16 @@ func loadTweet(){
     }
     
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return tweetArray.count
     }
-
+    
     
 }
